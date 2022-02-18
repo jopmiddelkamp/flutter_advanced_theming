@@ -33,7 +33,5 @@ class DarkThemeColorScheme extends TenantThemeColorScheme with Diagnosticable {
           onInfo: const Color.fromRGBO(255, 255, 255, 1),
           badge: const Color.fromARGB(255, 152, 0, 1),
           onBadge: const Color.fromRGBO(255, 255, 255, 1),
-          primaryVariant: const Color.fromRGBO(0, 56, 95, 1),
-          secondaryVariant: const Color.fromRGBO(0, 191, 255, 1),
         );
 }

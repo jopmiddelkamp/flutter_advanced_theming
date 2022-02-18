@@ -31,8 +31,6 @@ class TenantThemeColorScheme extends Equatable with Diagnosticable {
     required this.onInfo,
     required this.badge,
     required this.onBadge,
-    required Color primaryVariant,
-    required Color secondaryVariant,
   }) : materialColorScheme = ColorScheme(
           primary: primary,
           secondary: secondary,
@@ -45,8 +43,6 @@ class TenantThemeColorScheme extends Equatable with Diagnosticable {
           onBackground: onBackground,
           onError: onError,
           brightness: brightness,
-          primaryVariant: primaryVariant,
-          secondaryVariant: secondaryVariant,
         );
 
   final ColorScheme materialColorScheme;
@@ -62,8 +58,6 @@ class TenantThemeColorScheme extends Equatable with Diagnosticable {
   Color get onSurface => materialColorScheme.onSurface;
   Color get onBackground => materialColorScheme.onBackground;
   Color get onError => materialColorScheme.onError;
-  Color get primaryVariant => materialColorScheme.primaryVariant;
-  Color get secondaryVariant => materialColorScheme.secondaryVariant;
 
   final Color primaryDarker;
   final Color primaryDarkest;
@@ -116,8 +110,6 @@ class TenantThemeColorScheme extends Equatable with Diagnosticable {
     Color? badge,
     Color? onBadge,
     Brightness? brightness,
-    Color? primaryVariant,
-    Color? secondaryVariant,
   }) {
     return TenantThemeColorScheme(
       primary: primary ?? this.primary,
@@ -147,8 +139,6 @@ class TenantThemeColorScheme extends Equatable with Diagnosticable {
       badge: badge ?? this.badge,
       onBadge: onBadge ?? this.onBadge,
       brightness: brightness ?? this.brightness,
-      primaryVariant: primaryVariant ?? this.primaryVariant,
-      secondaryVariant: secondaryVariant ?? this.secondaryVariant,
     );
   }
 

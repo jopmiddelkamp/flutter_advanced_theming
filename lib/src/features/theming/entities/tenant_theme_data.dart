@@ -42,8 +42,6 @@ class TenantThemeData extends Equatable with Diagnosticable {
       badge: const Color.fromRGBO(237, 109, 73, 1),
       onBadge: const Color.fromRGBO(255, 255, 255, 1),
       brightness: Brightness.dark,
-      primaryVariant: const Color.fromRGBO(0, 56, 95, 1),
-      secondaryVariant: const Color.fromRGBO(0, 191, 255, 1),
     );
     final theme = ThemeData.from(
       colorScheme: colorScheme.materialColorScheme,
