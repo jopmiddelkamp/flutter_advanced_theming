@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../src.dart';
+import 'tenant_text_theme_data.dart';
 
 class TenantThemeData extends Equatable with Diagnosticable {
   factory TenantThemeData({
@@ -11,6 +12,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
     CustomAppBarThemeData? appBarTheme,
     BadgeThemeData? badgeTheme,
     PillThemeData? pillTheme,
+    TenantTextThemeData? textTheme,
   }) {
     colorScheme ??= TenantThemeColorScheme(
       primary: const Color.fromRGBO(0, 56, 95, 1),
@@ -46,6 +48,10 @@ class TenantThemeData extends Equatable with Diagnosticable {
     final theme = ThemeData.from(
       colorScheme: colorScheme.materialColorScheme,
     );
+    textTheme ??= TenantTextThemeData(
+      colorScheme: colorScheme,
+    );
+
     materialTheme ??= theme.copyWith(
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -68,6 +74,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
       shape: const CustomAppBarShape(
         lineHeight: 20,
       ),
+      titleTextStyle: textTheme.appBar,
     );
     badgeTheme ??= BadgeThemeData(
       backgroundColor: colorScheme.secondary,
@@ -75,12 +82,14 @@ class TenantThemeData extends Equatable with Diagnosticable {
       size: 16.0,
     );
     pillTheme ??= const PillThemeData();
+
     return TenantThemeData._(
       materialTheme: materialTheme,
       colorScheme: colorScheme,
       appBarTheme: appBarTheme,
       badgeTheme: badgeTheme,
       pillTheme: pillTheme,
+      textTheme: textTheme,
     );
   }
 
@@ -90,6 +99,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
     required this.appBarTheme,
     required this.badgeTheme,
     required this.pillTheme,
+    required this.textTheme,
   });
 
   final ThemeData materialTheme;
@@ -102,12 +112,15 @@ class TenantThemeData extends Equatable with Diagnosticable {
 
   final PillThemeData pillTheme;
 
+  final TenantTextThemeData textTheme;
+
   TenantThemeData copyWith({
     ThemeData? materialTheme,
     TenantThemeColorScheme? colorScheme,
     CustomAppBarThemeData? appBarTheme,
     BadgeThemeData? badgeTheme,
     PillThemeData? pillTheme,
+    TenantTextThemeData? textTheme,
   }) {
     return TenantThemeData(
       materialTheme: materialTheme ?? this.materialTheme,
@@ -115,6 +128,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
       appBarTheme: appBarTheme ?? this.appBarTheme,
       badgeTheme: badgeTheme ?? this.badgeTheme,
       pillTheme: pillTheme ?? this.pillTheme,
+      textTheme: textTheme ?? this.textTheme,
     );
   }
 
@@ -127,5 +141,6 @@ class TenantThemeData extends Equatable with Diagnosticable {
         appBarTheme,
         badgeTheme,
         pillTheme,
+        textTheme,
       ];
 }
