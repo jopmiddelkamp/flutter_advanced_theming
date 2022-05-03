@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../src.dart';
 
-const kDefaultAnimationDuration = Duration(milliseconds: 300);
-
 class TenantTheme extends InheritedTheme {
   const TenantTheme({
     this.data,

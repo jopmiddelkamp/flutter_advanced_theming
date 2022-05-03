@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../src.dart';
 
-class DarkThemeColorScheme extends TenantThemeColorScheme with Diagnosticable {
+class DarkThemeColorScheme extends TenantThemeColorScheme {
   DarkThemeColorScheme()
       : super(
           brightness: Brightness.light,

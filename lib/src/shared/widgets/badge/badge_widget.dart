@@ -47,7 +47,7 @@ class Badge extends StatelessWidget {
   }
 
   // If size is not set this should be calculated based on render object. But
-  //this is out of scope for our theming example.
+  // this is out of scope for our theming example.
   double _calculateSize(
     BadgeThemeData theme,
     TenantThemeData tenantTheme,

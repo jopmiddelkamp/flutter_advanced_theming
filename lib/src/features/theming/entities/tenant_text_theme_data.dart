@@ -9,26 +9,28 @@ class TenantTextThemeData extends Equatable {
     TextStyle? appBar,
   }) {
     return TenantTextThemeData._(
-      appBar: appBar ??
-          TextStyle(
-            color: colorScheme.onPrimary,
-            fontSize: 33.0,
-            fontWeight: FontWeight.bold,
+      pageTitleLight: appBar ??
+          const TextStyle(
+            color: Colors.purple,
+            fontWeight: FontWeight.w700,
+            fontFamily: "Recoleta",
+            fontStyle: FontStyle.normal,
+            fontSize: 24.0,
           ),
     );
   }
 
   const TenantTextThemeData._({
-    required this.appBar,
+    required this.pageTitleLight,
   });
 
-  final TextStyle appBar;
+  final TextStyle pageTitleLight;
 
   TenantTextThemeData copyWith({
     TextStyle? appBar,
   }) {
     return TenantTextThemeData._(
-      appBar: appBar ?? this.appBar,
+      pageTitleLight: appBar ?? pageTitleLight,
     );
   }
 
@@ -36,6 +38,6 @@ class TenantTextThemeData extends Equatable {
 
   @override
   List<Object?> get props => [
-        appBar,
+        pageTitleLight,
       ];
 }

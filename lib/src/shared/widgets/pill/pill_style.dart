@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class PillStyle extends Equatable with Diagnosticable {
+class PillStyle extends Equatable {
   const PillStyle({
     this.textStyle,
     this.backgroundColor,

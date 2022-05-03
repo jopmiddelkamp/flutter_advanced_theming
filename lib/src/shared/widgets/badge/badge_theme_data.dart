@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-class BadgeThemeData extends Equatable with Diagnosticable {
+class BadgeThemeData extends Equatable {
   const BadgeThemeData({
     this.backgroundColor,
     this.onBackgroundColor,
@@ -13,6 +12,16 @@ class BadgeThemeData extends Equatable with Diagnosticable {
   final Color? onBackgroundColor;
   final double? size;
 
+  BadgeThemeData merge(
+    BadgeThemeData other,
+  ) {
+    return copyWith(
+      backgroundColor: other.backgroundColor,
+      onBackgroundColor: other.onBackgroundColor,
+      size: other.size,
+    );
+  }
+
   BadgeThemeData copyWith({
     Color? backgroundColor,
     Color? onBackgroundColor,
@@ -22,16 +31,6 @@ class BadgeThemeData extends Equatable with Diagnosticable {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       onBackgroundColor: onBackgroundColor ?? this.onBackgroundColor,
       size: size ?? this.size,
-    );
-  }
-
-  BadgeThemeData merge(
-    BadgeThemeData other,
-  ) {
-    return copyWith(
-      backgroundColor: other.backgroundColor,
-      onBackgroundColor: other.onBackgroundColor,
-      size: other.size,
     );
   }
 

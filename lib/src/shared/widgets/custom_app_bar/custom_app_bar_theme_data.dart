@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomAppBarThemeData extends Equatable with Diagnosticable {
+class CustomAppBarThemeData extends Equatable {
   const CustomAppBarThemeData({
     required this.gradient,
     this.shape,

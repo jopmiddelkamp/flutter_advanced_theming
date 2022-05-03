@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../src.dart';
@@ -247,8 +246,7 @@ class _PillState extends State<Pill>
 }
 
 @immutable
-class _PillDefaultBackground extends MaterialStateProperty<Color?>
-    with Diagnosticable {
+class _PillDefaultBackground extends MaterialStateProperty<Color?> {
   _PillDefaultBackground(
     this.primary,
     this.onSurface,
@@ -267,8 +265,7 @@ class _PillDefaultBackground extends MaterialStateProperty<Color?>
 }
 
 @immutable
-class _PillDefaultForeground extends MaterialStateProperty<Color?>
-    with Diagnosticable {
+class _PillDefaultForeground extends MaterialStateProperty<Color?> {
   _PillDefaultForeground(
     this.onPrimary,
     this.onSurface,

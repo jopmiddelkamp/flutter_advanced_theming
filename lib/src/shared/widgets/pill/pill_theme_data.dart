@@ -1,11 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../src.dart';
 
-class PillThemeData extends Equatable with Diagnosticable {
+class PillThemeData extends Equatable {
   const PillThemeData({
     this.style,
   });

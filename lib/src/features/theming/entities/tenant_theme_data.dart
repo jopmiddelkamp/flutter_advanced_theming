@@ -1,11 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../src.dart';
 import 'tenant_text_theme_data.dart';
 
-class TenantThemeData extends Equatable with Diagnosticable {
+class TenantThemeData extends Equatable {
   factory TenantThemeData({
     ThemeData? materialTheme,
     TenantThemeColorScheme? colorScheme,
@@ -72,7 +71,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
       shape: const CustomAppBarShape(
         lineHeight: 20,
       ),
-      titleTextStyle: textTheme.appBar,
+      titleTextStyle: textTheme.pageTitleLight,
     );
     badgeTheme ??= BadgeThemeData(
       backgroundColor: colorScheme.secondary,
@@ -91,7 +90,7 @@ class TenantThemeData extends Equatable with Diagnosticable {
     );
   }
 
-  TenantThemeData._({
+  const TenantThemeData._({
     required this.materialTheme,
     required this.colorScheme,
     required this.appBarTheme,

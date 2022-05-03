@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class TenantThemeColorScheme extends Equatable with Diagnosticable {
+class TenantThemeColorScheme extends Equatable {
   TenantThemeColorScheme({
     required Color primary,
     required this.primaryDarker,
