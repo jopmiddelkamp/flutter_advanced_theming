@@ -8,10 +8,10 @@ class TenantThemeData extends Equatable {
   factory TenantThemeData({
     ThemeData? materialTheme,
     TenantThemeColorScheme? colorScheme,
+    TenantTextThemeData? textTheme,
     CustomAppBarThemeData? appBarTheme,
     BadgeThemeData? badgeTheme,
     PillThemeData? pillTheme,
-    TenantTextThemeData? textTheme,
   }) {
     colorScheme ??= TenantThemeColorScheme(
       primary: const Color.fromRGBO(0, 56, 95, 1),
