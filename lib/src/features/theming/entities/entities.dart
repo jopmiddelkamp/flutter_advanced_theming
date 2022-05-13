@@ -1,2 +1,3 @@
-export 'tenant_theme_color_scheme.dart';
-export 'tenant_theme_data.dart';
+export 'custom_color_scheme.dart';
+export 'custom_text_theme.dart';
+export 'custom_theme.dart';

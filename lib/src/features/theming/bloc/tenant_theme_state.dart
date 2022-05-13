@@ -7,7 +7,7 @@ class TenantThemeState extends Equatable {
     required this.colorScheme,
   });
 
-  final TenantThemeColorScheme colorScheme;
+  final CustomColorScheme colorScheme;
 
   @override
   List<Object?> get props => [

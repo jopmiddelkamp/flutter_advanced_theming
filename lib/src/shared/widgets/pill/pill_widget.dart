@@ -4,100 +4,26 @@ import '../../../src.dart';
 
 class Pill extends StatefulWidget {
   const Pill({
-    Key? key,
-    required this.onPressed,
-    this.style,
+    super.key,
     required this.child,
-  }) : super(key: key);
-
-  final VoidCallback? onPressed;
-
-  final PillStyle? style;
+    this.onPressed,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.textStyle,
+    this.padding,
+    this.side,
+    this.duration,
+  });
 
   final Widget? child;
+  final VoidCallback? onPressed;
 
-  PillStyle defaultStyleOf(
-    BuildContext context,
-  ) {
-    final theme = TenantTheme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textScaleFactor = MediaQuery.maybeOf(context)?.textScaleFactor ?? 1;
-
-    return Pill.styleFrom(
-      primary: colorScheme.primary,
-      onPrimary: colorScheme.onPrimary,
-      onSurface: colorScheme.onSurface,
-      textStyle: theme.materialTheme.textTheme.button,
-      padding: EdgeInsets.symmetric(
-        horizontal: 12 * textScaleFactor,
-        vertical: 6 * textScaleFactor,
-      ),
-      side: const BorderSide(
-        style: BorderStyle.none,
-      ),
-      animationDuration: kThemeAnimationDuration,
-    );
-  }
-
-  static Widget onDarkSurface({
-    required VoidCallback onPressed,
-    required Widget child,
-  }) {
-    return Builder(builder: (context) {
-      final theme = Theme.of(context);
-      return Pill(
-        onPressed: onPressed,
-        child: child,
-        style: Pill.styleFrom(
-          primary: Colors.transparent,
-          onPrimary: Colors.white,
-          side: const BorderSide(
-            color: Colors.white,
-            width: 1,
-          ),
-          textStyle: theme.textTheme.button!.copyWith(
-            color: Colors.white,
-          ),
-        ),
-      );
-    });
-  }
-
-  static PillStyle styleFrom({
-    Color? primary,
-    Color? onPrimary,
-    Color? onSurface,
-    TextStyle? textStyle,
-    EdgeInsetsGeometry? padding,
-    BorderSide? side,
-    Duration? animationDuration,
-  }) {
-    final backgroundColor = (onSurface == null && primary == null)
-        ? null
-        : _PillDefaultBackground(primary, onSurface);
-    final foregroundColor = (onSurface == null && onPrimary == null)
-        ? null
-        : _PillDefaultForeground(onPrimary, onSurface);
-
-    return PillStyle(
-      textStyle: MaterialStateProperty.all<TextStyle?>(textStyle),
-      backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
-      padding: _allOrNull(padding),
-      side: _allOrNull(side),
-      animationDuration: animationDuration,
-    );
-  }
-
-  static MaterialStateProperty<T>? _allOrNull<T>(T? value) {
-    return value == null ? null : MaterialStateProperty.all<T>(value);
-  }
-
-  PillStyle? themeStyleOf(
-    BuildContext context,
-  ) {
-    return PillTheme.of(context).style;
-  }
+  final ActiveMaterialStateProperty<Color>? backgroundColor;
+  final ActiveMaterialStateProperty<Color>? foregroundColor;
+  final ActiveMaterialStateProperty<TextStyle>? textStyle;
+  final ActiveMaterialStateProperty<EdgeInsetsGeometry>? padding;
+  final ActiveMaterialStateProperty<BorderSide>? side;
+  final Duration? duration;
 
   bool get enabled => onPressed != null;
 
@@ -139,44 +65,17 @@ class _PillState extends State<Pill>
   Widget build(
     BuildContext context,
   ) {
-    final widgetStyle = widget.style;
-    final themeStyle = widget.themeStyleOf(context);
-    final defaultStyle = widget.defaultStyleOf(context);
+    final colorScheme = CustomColorScheme.of(context);
+    final textTheme = CustomTextTheme.of(context);
+    final theme = _getTheme(context, colorScheme, textTheme);
 
-    T? effectiveValue<T>(T? Function(PillStyle?) getProperty) {
-      final T? widgetValue = getProperty(widgetStyle);
-      final T? themeValue = getProperty(themeStyle);
-      final T? defaultValue = getProperty(defaultStyle);
-      return widgetValue ?? themeValue ?? defaultValue;
-    }
-
-    T? resolve<T>(MaterialStateProperty<T?>? Function(PillStyle?) getProperty) {
-      return effectiveValue(
-        (style) => getProperty(style)?.resolve(materialStates),
-      );
-    }
-
-    var backgroundColor = resolve(
-      (style) => style?.backgroundColor,
-    )!;
-    final foregroundColor = resolve(
-      (style) => style?.foregroundColor,
-    )!;
-    final padding = resolve(
-      (style) => style?.padding,
-    )!;
-    final side = resolve(
-      (style) => style?.side,
-    )!;
-    final textStyle = resolve(
-      (style) => style?.textStyle,
-    )!
-        .copyWith(
-      color: foregroundColor,
-    );
-    final animationDuration = effectiveValue(
-      (style) => style?.animationDuration,
-    )!;
+    var backgroundColor = _getBackgroundColor(theme);
+    final foregroundColor = _getForegroundColor(theme);
+    final padding = _getPadding(theme);
+    final side = _getSide(theme);
+    final textStyle = _getTextStyle(theme, textTheme);
+    final animationDuration =
+        widget.duration ?? const Duration(milliseconds: 200);
 
     if (animationDuration > Duration.zero &&
         _backgroundColor != null &&
@@ -206,31 +105,34 @@ class _PillState extends State<Pill>
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(
-          // Should be generated by render box.
+          // Should be generated by render box but out of scope for example.
           padding.vertical + textStyle.fontSize!,
         ),
       ),
     );
 
-    final result = Material(
-      elevation: 0,
-      color: backgroundColor,
-      textStyle: textStyle,
-      shape: shape.copyWith(
-        side: side,
-      ),
-      type: MaterialType.button,
-      animationDuration: animationDuration,
-      child: InkWell(
-        onTap: widget.onPressed,
-        highlightColor: Colors.transparent,
-        customBorder: shape,
-        canRequestFocus: widget.enabled,
-        child: IconTheme.merge(
-          data: IconThemeData(color: foregroundColor),
-          child: Padding(
-            padding: padding,
-            child: widget.child,
+    final result = IconTheme.merge(
+      data: IconThemeData(color: foregroundColor),
+      child: DefaultTextStyle.merge(
+        style: TextStyle(color: foregroundColor),
+        child: Material(
+          elevation: 0,
+          color: backgroundColor,
+          textStyle: textStyle,
+          shape: shape.copyWith(
+            side: side,
+          ),
+          type: MaterialType.button,
+          animationDuration: animationDuration,
+          child: InkWell(
+            onTap: widget.onPressed,
+            highlightColor: Colors.transparent,
+            customBorder: shape,
+            canRequestFocus: widget.enabled,
+            child: Padding(
+              padding: padding,
+              child: widget.child,
+            ),
           ),
         ),
       ),
@@ -243,44 +145,68 @@ class _PillState extends State<Pill>
       child: result,
     );
   }
-}
 
-@immutable
-class _PillDefaultBackground extends MaterialStateProperty<Color?> {
-  _PillDefaultBackground(
-    this.primary,
-    this.onSurface,
-  );
-
-  final Color? primary;
-  final Color? onSurface;
-
-  @override
-  Color? resolve(Set<MaterialState> states) {
-    if (states.contains(MaterialState.disabled)) {
-      return onSurface?.withOpacity(0.12);
-    }
-    return primary;
-  }
-}
-
-@immutable
-class _PillDefaultForeground extends MaterialStateProperty<Color?> {
-  _PillDefaultForeground(
-    this.onPrimary,
-    this.onSurface,
-  );
-
-  final Color? onPrimary;
-  final Color? onSurface;
-
-  @override
-  Color? resolve(
-    Set<MaterialState> states,
+  Color _getBackgroundColor(
+    PillTheme theme,
   ) {
-    if (states.contains(MaterialState.disabled)) {
-      return onSurface?.withOpacity(0.38);
-    }
-    return onPrimary;
+    return resolve(
+      widget.backgroundColor,
+      theme.backgroundColor,
+      materialStates,
+    );
+  }
+
+  Color _getForegroundColor(
+    PillTheme theme,
+  ) {
+    return resolve(
+      widget.foregroundColor,
+      theme.foregroundColor,
+      materialStates,
+    );
+  }
+
+  EdgeInsetsGeometry _getPadding(
+    PillTheme theme,
+  ) {
+    return resolve(
+      widget.padding,
+      theme.padding,
+      materialStates,
+    );
+  }
+
+  BorderSide _getSide(
+    PillTheme theme,
+  ) {
+    return resolve(
+      widget.side,
+      theme.side,
+      materialStates,
+    );
+  }
+
+  TextStyle _getTextStyle(
+    PillTheme theme,
+    CustomTextTheme textTheme,
+  ) {
+    return resolve(
+      widget.textStyle,
+      theme.textStyle,
+      materialStates,
+    );
+  }
+
+  PillTheme _getTheme(
+    BuildContext context,
+    CustomColorScheme colorScheme,
+    CustomTextTheme textTheme,
+  ) {
+    final customTheme = CustomTheme.of(context);
+    return customTheme.pillTheme ??
+        PillTheme(
+          colorScheme: colorScheme,
+          textTheme: textTheme,
+        );
   }
 }

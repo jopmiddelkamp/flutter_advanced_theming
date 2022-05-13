@@ -1,59 +1,67 @@
+import 'dart:ui' show lerpDouble;
+
 import 'package:flutter/material.dart';
 
 import '../../../src.dart';
 
-class BadgeTheme extends InheritedTheme {
-  const BadgeTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(
-          key: key,
-          child: child,
-        );
-
-  final BadgeThemeData? data;
-
-  static Widget merge({
-    Key? key,
-    required BadgeThemeData data,
-    required Widget child,
+class BadgeTheme extends ThemeExtension<BadgeTheme> {
+  factory BadgeTheme({
+    required CustomColorScheme colorScheme,
+    required CustomTextTheme textTheme,
   }) {
-    return Builder(
-      builder: (context) {
-        return BadgeTheme(
-          key: key,
-          data: _getInheritedBadgeThemeData(context).merge(data),
-          child: child,
-        );
-      },
+    return BadgeTheme.custom(
+      backgroundColor: colorScheme.primary,
+      onBackgroundColor: colorScheme.onPrimary,
+      size: textTheme.bodyText.fontSize!,
+    );
+  }
+  factory BadgeTheme.onPrimary({
+    required CustomColorScheme colorScheme,
+    required CustomTextTheme textTheme,
+  }) {
+    return BadgeTheme.custom(
+      backgroundColor: colorScheme.primary,
+      onBackgroundColor: colorScheme.onPrimary,
+      size: textTheme.bodyText.fontSize!,
     );
   }
 
-  static BadgeThemeData of(
-    BuildContext context,
-  ) {
-    return _getInheritedBadgeThemeData(context).resolve(context);
-  }
+  const BadgeTheme.custom({
+    required this.backgroundColor,
+    required this.onBackgroundColor,
+    required this.size,
+  });
 
-  static BadgeThemeData _getInheritedBadgeThemeData(
-    BuildContext context,
-  ) {
-    final scope = context.dependOnInheritedWidgetOfExactType<BadgeTheme>();
-    return scope?.data ?? TenantTheme.of(context).badgeTheme;
+  final Color backgroundColor;
+  final Color onBackgroundColor;
+  final double size;
+
+  @override
+  BadgeTheme copyWith({
+    Color? backgroundColor,
+    Color? onBackgroundColor,
+    double? size,
+  }) {
+    return BadgeTheme.custom(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      onBackgroundColor: onBackgroundColor ?? this.onBackgroundColor,
+      size: size ?? this.size,
+    );
   }
 
   @override
-  bool updateShouldNotify(BadgeTheme oldWidget) => data != oldWidget.data;
-
-  @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
+  ThemeExtension<BadgeTheme> lerp(
+    ThemeExtension<BadgeTheme>? other,
+    double t,
   ) {
-    return BadgeTheme(
-      data: data,
-      child: child,
+    if (other is! BadgeTheme) {
+      return this;
+    }
+    return BadgeTheme.custom(
+      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t)!,
+      onBackgroundColor:
+          Color.lerp(onBackgroundColor, other.onBackgroundColor, t)!,
+      size: lerpDouble(size, other.size, t)!,
     );
   }
 }
