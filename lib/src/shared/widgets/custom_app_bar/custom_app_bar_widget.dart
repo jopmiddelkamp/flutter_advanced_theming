@@ -7,7 +7,7 @@ const double kCustomToolbarHeight = 75.0;
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.toolbarHeight,
     this.gradient,
@@ -21,8 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleTextStyle,
     this.systemOverlayStyle,
     this.actions,
-  })  : preferredSize = Size.fromHeight(toolbarHeight ?? kCustomToolbarHeight),
-        super(key: key);
+  }) : preferredSize = Size.fromHeight(toolbarHeight ?? kCustomToolbarHeight);
 
   @override
   final Size preferredSize;
@@ -43,16 +42,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CustomAppBarTheme.of(context);
+    final colorScheme = CustomColorScheme.of(context);
+    final textTheme = CustomTextTheme.of(context);
+    final theme = _getTheme(context, colorScheme, textTheme);
+
+    final shape = this.shape ?? theme.shape;
+
     return AppBar(
       toolbarHeight: toolbarHeight,
       title: title,
-      flexibleSpace: _buildFlexibleSpace(
-        context,
-        theme,
+      flexibleSpace: Container(
+        decoration: ShapeDecoration(
+          shape: shape,
+          gradient: gradient ?? theme.gradient,
+        ),
       ),
-      shape: shape ?? theme.shape,
-      foregroundColor: foregroundColor ?? foregroundColor,
+      shape: shape,
+      foregroundColor: foregroundColor ?? theme.foregroundColor,
       elevation: elevation ?? theme.elevation,
       shadowColor: shadowColor ?? theme.shadowColor,
       iconTheme: iconTheme ?? theme.iconTheme,
@@ -61,23 +67,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: titleTextStyle ?? theme.titleTextStyle,
       systemOverlayStyle: systemOverlayStyle ?? theme.systemOverlayStyle,
       actions: actions,
+      backgroundColor: Colors.transparent,
     );
   }
 
-  Widget? _buildFlexibleSpace(
+  CustomAppBarTheme _getTheme(
     BuildContext context,
-    CustomAppBarThemeData theme,
+    CustomColorScheme colorScheme,
+    CustomTextTheme textTheme,
   ) {
-    final shape = this.shape ?? theme.shape;
-    if (shape == null) {
-      return null;
-    }
-    return Container(
-      decoration: ShapeDecoration(
-        shape: shape,
-        gradient: gradient ?? theme.gradient,
-      ),
-    );
+    final customTheme = CustomTheme.of(context);
+    return customTheme.customAppBarTheme ??
+        CustomAppBarTheme(
+          colorScheme: colorScheme,
+          textTheme: textTheme,
+        );
   }
 }
 

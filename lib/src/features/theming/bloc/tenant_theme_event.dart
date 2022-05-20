@@ -9,7 +9,7 @@ class TenantThemeLoad extends TenantThemeEvent {
     required this.colorScheme,
   });
 
-  final TenantThemeColorScheme colorScheme;
+  final CustomColorScheme colorScheme;
 }
 
 class TenantThemeToggle extends TenantThemeEvent {

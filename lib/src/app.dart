@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'src.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(
@@ -15,16 +15,10 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<TenantThemeBloc, TenantThemeState>(
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
-          final tenantTheme = TenantThemeData(
-            colorScheme: state.colorScheme,
-          );
-          return TenantTheme(
-            data: tenantTheme,
-            child: MaterialApp(
-              title: 'Flutter Demo',
-              theme: tenantTheme.materialTheme,
-              home: const HomePage(),
-            ),
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: buildTheme(state.colorScheme),
+            home: const HomePage(),
           );
         },
       ),

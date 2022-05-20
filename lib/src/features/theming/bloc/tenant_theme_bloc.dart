@@ -6,13 +6,13 @@ class TenantThemeBloc extends Bloc<TenantThemeEvent, TenantThemeState> {
   TenantThemeBloc()
       : super(
           TenantThemeState(
-            colorScheme: LightThemeColorScheme(),
+            colorScheme: lightColorScheme,
           ),
         ) {
     on<TenantThemeToggle>((event, emit) async {
-      final colorScheme = state.colorScheme == LightThemeColorScheme()
-          ? DarkThemeColorScheme()
-          : LightThemeColorScheme();
+      final colorScheme = state.colorScheme == lightColorScheme
+          ? darkColorScheme
+          : lightColorScheme;
 
       emit(TenantThemeState(
         colorScheme: colorScheme,
