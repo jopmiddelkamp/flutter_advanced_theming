@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../src.dart';
+import '../../src.dart';
 
 class PillTheme extends ThemeExtension<PillTheme> {
   factory PillTheme({

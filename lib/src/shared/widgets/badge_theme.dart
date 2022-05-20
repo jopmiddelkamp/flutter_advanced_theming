@@ -2,7 +2,7 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 
-import '../../../src.dart';
+import '../../src.dart';
 
 class BadgeTheme extends ThemeExtension<BadgeTheme> {
   factory BadgeTheme({

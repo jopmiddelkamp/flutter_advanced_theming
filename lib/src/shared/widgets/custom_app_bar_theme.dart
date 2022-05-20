@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../src.dart';
+import '../../src.dart';
 
 class CustomAppBarTheme extends ThemeExtension<CustomAppBarTheme> {
   factory CustomAppBarTheme({
