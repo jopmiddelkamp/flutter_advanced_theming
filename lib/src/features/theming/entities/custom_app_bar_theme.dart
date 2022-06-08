@@ -3,111 +3,80 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../src.dart';
+import '../../../src.dart';
 
 class CustomAppBarTheme extends ThemeExtension<CustomAppBarTheme> {
   factory CustomAppBarTheme({
-    required CustomColorScheme colorScheme,
-    required CustomTextTheme textTheme,
+    required CustomAppBarColorScheme primaryColorScheme,
     Gradient? gradient,
-    Color? foregroundColor,
     ShapeBorder? shape,
     double? elevation,
-    Color? shadowColor,
     IconThemeData? iconTheme,
     IconThemeData? actionsIconTheme,
     double? titleSpacing,
     TextStyle? titleTextStyle,
     SystemUiOverlayStyle? systemOverlayStyle,
+    double? bottomLineHeight,
   }) {
-    final defaultGradient = LinearGradient(
-      begin: Alignment.centerLeft,
-      end: Alignment.centerRight,
-      colors: <Color>[
-        colorScheme.primary,
-        colorScheme.primaryDarker,
-      ],
-    );
-    final defaultForegroundColor = colorScheme.onPrimary;
-    const defaultShape = CustomAppBarShape(
-      lineHeight: 20,
-    );
     const defaultElevation = 4.0;
-    final defaultShadowColor = colorScheme.shadow;
-    final defaultIconTheme = IconThemeData(
-      color: colorScheme.onPrimary,
-    );
-    final defaultActionsIconTheme = IconThemeData(
-      color: colorScheme.onPrimary,
-    );
-    final defaultTitleSpacing = textTheme.bodyText.fontSize! * 0.5;
-    final defaultTitleTextStyle = textTheme.pageTitleLight.copyWith(
-      color: colorScheme.onPrimary,
-    );
+    const defaultIconTheme = IconThemeData();
+    const defaultActionsIconTheme = IconThemeData();
+    const defaultTitleSpacing = 4.0;
+    const defaultTitleTextStyle = CustomTextStyles.pageTitleLight;
     const defaultSystemOverlayStyle = SystemUiOverlayStyle.light;
 
     return CustomAppBarTheme._(
-      gradient: gradient ?? defaultGradient,
-      foregroundColor: foregroundColor ?? defaultForegroundColor,
-      shape: shape ?? defaultShape,
+      primaryColorScheme: primaryColorScheme,
       elevation: elevation ?? defaultElevation,
-      shadowColor: shadowColor ?? defaultShadowColor,
       iconTheme: iconTheme ?? defaultIconTheme,
       actionsIconTheme: actionsIconTheme ?? defaultActionsIconTheme,
       titleSpacing: titleSpacing ?? defaultTitleSpacing,
       titleTextStyle: titleTextStyle ?? defaultTitleTextStyle,
       systemOverlayStyle: systemOverlayStyle ?? defaultSystemOverlayStyle,
+      bottomLineHeight: bottomLineHeight ?? 20,
     );
   }
 
   const CustomAppBarTheme._({
-    required this.gradient,
-    required this.foregroundColor,
-    required this.shape,
+    required this.primaryColorScheme,
     required this.elevation,
-    required this.shadowColor,
     required this.iconTheme,
     required this.actionsIconTheme,
     required this.titleSpacing,
     required this.titleTextStyle,
     required this.systemOverlayStyle,
+    required this.bottomLineHeight,
   });
 
-  final Gradient gradient;
-  final Color foregroundColor;
-  final ShapeBorder shape;
+  final CustomAppBarColorScheme primaryColorScheme;
   final double elevation;
-  final Color shadowColor;
   final IconThemeData iconTheme;
   final IconThemeData actionsIconTheme;
   final double titleSpacing;
   final TextStyle titleTextStyle;
   final SystemUiOverlayStyle systemOverlayStyle;
+  final double bottomLineHeight;
 
   @override
   CustomAppBarTheme copyWith({
-    Gradient? gradient,
-    ShapeBorder? shape,
-    Color? foregroundColor,
+    CustomAppBarColorScheme? primaryColorScheme,
     double? elevation,
-    Color? shadowColor,
     IconThemeData? iconTheme,
     IconThemeData? actionsIconTheme,
     double? titleSpacing,
     TextStyle? titleTextStyle,
     SystemUiOverlayStyle? systemOverlayStyle,
+    double? bottomLineHeight,
   }) {
     return CustomAppBarTheme._(
-      gradient: gradient ?? this.gradient,
-      shape: shape ?? this.shape,
-      foregroundColor: foregroundColor ?? this.foregroundColor,
+      primaryColorScheme: primaryColorScheme ?? this.primaryColorScheme,
       elevation: elevation ?? this.elevation,
-      shadowColor: shadowColor ?? this.shadowColor,
       iconTheme: iconTheme ?? this.iconTheme,
       actionsIconTheme: actionsIconTheme ?? this.actionsIconTheme,
       titleSpacing: titleSpacing ?? this.titleSpacing,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       systemOverlayStyle: systemOverlayStyle ?? this.systemOverlayStyle,
+      bottomLineHeight: bottomLineHeight ?? this.bottomLineHeight,
     );
   }
 
@@ -120,11 +89,12 @@ class CustomAppBarTheme extends ThemeExtension<CustomAppBarTheme> {
       return this;
     }
     return CustomAppBarTheme._(
-      gradient: Gradient.lerp(gradient, other.gradient, t)!,
-      foregroundColor: Color.lerp(foregroundColor, other.foregroundColor, t)!,
-      shape: shapeBorderLerp(shape, other.shape, t),
+      primaryColorScheme: CustomAppBarColorScheme.lerp(
+        primaryColorScheme,
+        other.primaryColorScheme,
+        t,
+      ),
       elevation: lerpDouble(elevation, other.elevation, t)!,
-      shadowColor: Color.lerp(shadowColor, other.shadowColor, t)!,
       iconTheme: IconThemeData.lerp(iconTheme, other.iconTheme, t),
       actionsIconTheme:
           IconThemeData.lerp(actionsIconTheme, other.actionsIconTheme, t),
@@ -132,6 +102,11 @@ class CustomAppBarTheme extends ThemeExtension<CustomAppBarTheme> {
       titleTextStyle: TextStyle.lerp(titleTextStyle, other.titleTextStyle, t)!,
       systemOverlayStyle:
           t < 0.5 ? systemOverlayStyle : other.systemOverlayStyle,
+      bottomLineHeight:
+          lerpDouble(bottomLineHeight, other.bottomLineHeight, t)!,
     );
   }
+
+  static CustomAppBarTheme of(BuildContext context) =>
+      Theme.of(context).extension<CustomAppBarTheme>() as CustomAppBarTheme;
 }

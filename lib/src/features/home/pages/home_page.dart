@@ -3,10 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../src.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
   });
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late bool _pillSelected;
+
+  @override
+  void initState() {
+    _pillSelected = false;
+    super.initState();
+  }
 
   @override
   Widget build(
@@ -17,14 +30,15 @@ class HomePage extends StatelessWidget {
         title: const Text('Home'),
         actions: const [
           Center(
-            child: Badge.onPrimary(
+            child: CustomBadge(
+              colorScheme: CustomBadgeColorSchemes.onPrimary,
               child: Icon(Icons.notifications),
               count: 7,
             ),
           ),
           SizedBox(width: 8),
           Center(
-            child: Badge(
+            child: CustomBadge(
               child: Icon(Icons.notifications),
               count: 7,
               background: Colors.purple,
@@ -54,7 +68,7 @@ class HomePage extends StatelessWidget {
                   child: const Text('Update theme'),
                 ),
                 const SizedBox(height: 16),
-                const Badge(
+                const CustomBadge(
                   child: Icon(Icons.notifications),
                   count: 7,
                 ),
@@ -62,15 +76,19 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Pill(
-                      onPressed: () {
-                        debugPrint('### Pill pressed');
-                      },
+                    CustomPill(
                       child: const Text('Pill'),
+                      selected: _pillSelected,
+                      onPressed: () {
+                        setState(() {
+                          _pillSelected = !_pillSelected;
+                        });
+                      },
                     ),
                     const SizedBox(width: 16),
-                    const Pill(
+                    const CustomPill(
                       child: Text('Pill'),
+                      enabled: false,
                     ),
                   ],
                 ),

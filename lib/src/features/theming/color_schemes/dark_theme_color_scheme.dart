@@ -5,6 +5,8 @@ import '../../../src.dart';
 final darkColorScheme = CustomColorScheme(
   brightness: Brightness.light,
   primary: const Color.fromRGBO(0, 56, 95, 1),
+  primaryDarker: const Color.fromRGBO(0, 44, 75, 1),
+  primaryDarkest: const Color.fromRGBO(1, 13, 19, 1),
   onPrimary: const Color.fromRGBO(255, 255, 255, 1),
   secondary: const Color.fromRGBO(0, 191, 255, 1),
   onSecondary: const Color.fromRGBO(255, 255, 255, 1),
@@ -14,8 +16,6 @@ final darkColorScheme = CustomColorScheme(
   onSurface: const Color.fromRGBO(55, 55, 55, 1),
   error: const Color.fromRGBO(237, 109, 73, 1),
   onError: const Color.fromRGBO(255, 255, 255, 1),
-  primaryDarker: const Color.fromRGBO(0, 44, 75, 1),
-  primaryDarkest: const Color.fromRGBO(1, 13, 19, 1),
   backgroundDarker: const Color.fromRGBO(246, 246, 246, 1),
   onSurfaceLighter: const Color.fromRGBO(182, 182, 182, 1),
   border: const Color.fromRGBO(235, 235, 235, 1),
