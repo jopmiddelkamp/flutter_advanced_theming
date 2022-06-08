@@ -16,12 +16,12 @@ ThemeData buildTheme(
         backgroundColor: SelectableMaterialStateProperty(
           active: colorScheme.primary,
           selected: colorScheme.primaryDarkest,
-          disabled: colorScheme.primary.withOpacity(0.12),
+          disabled: colorScheme.primary.withOpacity(0.3),
         ),
         foregroundColor: SelectableMaterialStateProperty(
           active: colorScheme.onPrimary,
           selected: colorScheme.onPrimary,
-          disabled: colorScheme.onPrimary.withOpacity(0.12),
+          disabled: colorScheme.onPrimary,
         ),
       ),
     ),
