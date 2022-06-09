@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../../src.dart';
@@ -17,7 +15,7 @@ class CustomBadge extends StatelessWidget {
     this.colorScheme = _defaultColorScheme,
     required this.child,
     required this.count,
-    this.background,
+    this.backgroundColor,
     this.foregroundColor,
     this.textStyle,
     this.padding,
@@ -26,7 +24,7 @@ class CustomBadge extends StatelessWidget {
   final CustomBadgeColorSchemes colorScheme;
   final Widget child;
   final int count;
-  final Color? background;
+  final Color? backgroundColor;
   final Color? foregroundColor;
   final TextStyle? textStyle;
   final EdgeInsets? padding;
@@ -37,9 +35,6 @@ class CustomBadge extends StatelessWidget {
   ) {
     final theme = CustomBadgeTheme.of(context);
     final colorScheme = _getColorScheme(theme);
-
-    final background = _getBackgroundColor(colorScheme);
-    final onBackground = _getForegroundColor(colorScheme);
 
     final textStyle = this.textStyle ?? theme.textStyle;
     final padding = this.padding ?? theme.padding;
@@ -55,25 +50,13 @@ class CustomBadge extends StatelessWidget {
             right: (size / 4.0) * -1.0,
             child: _Badge(
               count: count,
-              background: background,
-              onBackground: onBackground,
+              backgroundColor: backgroundColor ?? colorScheme.backgroundColor,
+              foregroundColor: foregroundColor ?? colorScheme.foregroundColor,
               size: size,
             ),
           ),
       ],
     );
-  }
-
-  Color _getForegroundColor(
-    CustomBadgeColorScheme colorScheme,
-  ) {
-    return foregroundColor ?? colorScheme.foregroundColor;
-  }
-
-  Color _getBackgroundColor(
-    CustomBadgeColorScheme colorScheme,
-  ) {
-    return background ?? colorScheme.backgroundColor;
   }
 
   CustomBadgeColorScheme _getColorScheme(
@@ -91,14 +74,14 @@ class CustomBadge extends StatelessWidget {
 class _Badge extends StatelessWidget {
   const _Badge({
     required this.count,
-    required this.background,
-    required this.onBackground,
+    required this.backgroundColor,
+    required this.foregroundColor,
     required this.size,
   });
 
   final int count;
-  final Color background;
-  final Color onBackground;
+  final Color backgroundColor;
+  final Color foregroundColor;
   final double size;
 
   @override
@@ -107,14 +90,14 @@ class _Badge extends StatelessWidget {
   ) {
     return CircleAvatar(
       maxRadius: size / 2,
-      backgroundColor: background,
+      backgroundColor: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Center(
           child: Text(
             count < 10 ? '$count' : '9+',
             style: TextStyle(
-              color: onBackground,
+              color: foregroundColor,
               fontSize: size / 4.0 * 2.5,
               fontWeight: FontWeight.w700,
             ),

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             child: CustomBadge(
               child: Icon(Icons.notifications),
               count: 7,
-              background: Colors.purple,
+              backgroundColor: Colors.purple,
             ),
           ),
           SizedBox(width: 16),
