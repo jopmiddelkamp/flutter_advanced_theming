@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../src.dart';
@@ -5,17 +6,21 @@ import '../../../src.dart';
 class TenantThemeBloc extends Bloc<TenantThemeEvent, TenantThemeState> {
   TenantThemeBloc()
       : super(
-          TenantThemeState(
-            colorScheme: lightColorScheme,
+          const TenantThemeState(
+            tenantId: 1,
+            themeMode: ThemeMode.system,
           ),
         ) {
-    on<TenantThemeToggle>((event, emit) async {
-      final colorScheme = state.colorScheme == lightColorScheme
-          ? darkColorScheme
-          : lightColorScheme;
-
+    on<SwitchTenant>((event, emit) async {
       emit(TenantThemeState(
-        colorScheme: colorScheme,
+        tenantId: event.tenantId,
+        themeMode: state.themeMode,
+      ));
+    });
+    on<SwitchThemeMode>((event, emit) async {
+      emit(TenantThemeState(
+        tenantId: state.tenantId,
+        themeMode: event.themeMode,
       ));
     });
   }

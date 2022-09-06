@@ -55,27 +55,24 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Press the button to fetch a new Theme.'),
+                const Text('Select tenant:'),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<TenantThemeBloc>()
-                        .add(const TenantThemeToggle());
-                  },
-                  child: const Text('Update theme'),
-                ),
+                const _TenantRadioList(),
+                const Text('Select theme mode:'),
                 const SizedBox(height: 16),
-                const CustomBadge(
-                  child: Icon(Icons.notifications),
-                  count: 7,
-                ),
+                const _ThemeModeRadioList(),
+                const SizedBox(height: 16),
+                const Text('Widget examples:'),
                 const SizedBox(height: 16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const CustomBadge(
+                      child: Icon(Icons.notifications),
+                      count: 7,
+                    ),
+                    const SizedBox(width: 16),
                     CustomPill(
                       child: const Text('Pill'),
                       selected: _pillSelected,
@@ -97,6 +94,96 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TenantRadioList extends StatelessWidget {
+  const _TenantRadioList();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (_, index) {
+        return _TenantRadioListItem(
+          index: index,
+        );
+      },
+      separatorBuilder: (_, __) => const Divider(
+        height: 1,
+      ),
+      itemCount: 2,
+    );
+  }
+}
+
+class _TenantRadioListItem extends StatelessWidget {
+  const _TenantRadioListItem({
+    required this.index,
+  });
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedTenantId = context.select<TenantThemeBloc, int>(
+      (bloc) => bloc.state.tenantId,
+    );
+    final tenantId = index + 1;
+    return RadioListTile<int>(
+      title: Text('Tenant $tenantId'),
+      value: tenantId,
+      groupValue: selectedTenantId,
+      onChanged: (_) {
+        final bloc = context.read<TenantThemeBloc>();
+        bloc.add(SwitchTenant(tenantId));
+      },
+    );
+  }
+}
+
+class _ThemeModeRadioList extends StatelessWidget {
+  const _ThemeModeRadioList();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (_, index) {
+        return _ThemeModeRadioListItem(
+          index: index,
+        );
+      },
+      separatorBuilder: (_, __) => const Divider(
+        height: 1,
+      ),
+      itemCount: ThemeMode.values.length,
+    );
+  }
+}
+
+class _ThemeModeRadioListItem extends StatelessWidget {
+  const _ThemeModeRadioListItem({
+    required this.index,
+  });
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedThemeMode = context.select<TenantThemeBloc, ThemeMode>(
+      (bloc) => bloc.state.themeMode,
+    );
+    final themeMode = ThemeMode.values[index];
+    return RadioListTile<ThemeMode>(
+      title: Text(themeMode.name),
+      value: themeMode,
+      groupValue: selectedThemeMode,
+      onChanged: (_) {
+        final bloc = context.read<TenantThemeBloc>();
+        bloc.add(SwitchThemeMode(themeMode));
+      },
     );
   }
 }

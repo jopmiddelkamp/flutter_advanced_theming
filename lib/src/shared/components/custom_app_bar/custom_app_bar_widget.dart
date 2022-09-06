@@ -52,15 +52,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CustomAppBarTheme.of(context);
-    final colorScheme = _getColorScheme(theme);
+    final theme = AppBarTheme.of(context);
+    final customTheme = CustomAppBarTheme.of(context);
+    final colorScheme = _getColorScheme(customTheme);
 
     final shape = CustomAppBarShape(
-      lineHeight: bottomLineHeight ?? theme.bottomLineHeight,
+      lineHeight: bottomLineHeight ?? customTheme.bottomLineHeight,
     );
 
+    const defaultForegroundColor = Colors.white;
+
     return CustomMergeForegroundColor(
-      color: foregroundColor ?? colorScheme.foregroundColor,
+      color: foregroundColor ?? theme.foregroundColor ?? defaultForegroundColor,
       child: AppBar(
         toolbarHeight: toolbarHeight,
         title: title,
@@ -80,14 +83,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         shape: shape,
-        foregroundColor: foregroundColor ?? colorScheme.foregroundColor,
-        elevation: elevation ?? theme.elevation,
-        shadowColor: shadowColor ?? colorScheme.shadowColor,
-        iconTheme: iconTheme ?? theme.iconTheme,
-        actionsIconTheme: actionsIconTheme ?? theme.actionsIconTheme,
-        titleSpacing: titleSpacing ?? theme.titleSpacing,
-        titleTextStyle: titleTextStyle ?? theme.titleTextStyle,
-        systemOverlayStyle: systemOverlayStyle ?? theme.systemOverlayStyle,
+        foregroundColor:
+            foregroundColor ?? theme.foregroundColor ?? defaultForegroundColor,
+        elevation: elevation,
+        iconTheme: iconTheme,
+        actionsIconTheme: actionsIconTheme,
+        titleSpacing: titleSpacing,
+        titleTextStyle: titleTextStyle,
+        systemOverlayStyle: systemOverlayStyle,
         actions: actions,
         backgroundColor: Colors.transparent,
       ),

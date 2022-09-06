@@ -1,17 +1,17 @@
-import '../../../src.dart';
+import 'package:flutter/material.dart';
 
 abstract class TenantThemeEvent {
   const TenantThemeEvent();
 }
 
-class TenantThemeLoad extends TenantThemeEvent {
-  const TenantThemeLoad({
-    required this.colorScheme,
-  });
+class SwitchTenant extends TenantThemeEvent {
+  const SwitchTenant(this.tenantId);
 
-  final CustomColorScheme colorScheme;
+  final int tenantId;
 }
 
-class TenantThemeToggle extends TenantThemeEvent {
-  const TenantThemeToggle();
+class SwitchThemeMode extends TenantThemeEvent {
+  const SwitchThemeMode(this.themeMode);
+
+  final ThemeMode themeMode;
 }

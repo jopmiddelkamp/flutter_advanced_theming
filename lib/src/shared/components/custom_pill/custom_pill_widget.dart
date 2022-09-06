@@ -126,6 +126,7 @@ class _CustomPillState extends AnimatedWidgetBaseState<CustomPill>
           color: _backgroundColorTween?.evaluate(animation) ??
               _getBackgroundColor(colorScheme),
         ),
+        clipBehavior: Clip.antiAlias,
         child: Material(
           color: Colors.transparent,
           child: InkWell(

@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
-
-import '../../../src.dart';
+import 'package:flutter/material.dart';
 
 class TenantThemeState extends Equatable {
   const TenantThemeState({
-    required this.colorScheme,
+    required this.tenantId,
+    required this.themeMode,
   });
 
-  final CustomColorScheme colorScheme;
+  final int tenantId;
+  final ThemeMode themeMode;
 
   @override
   List<Object?> get props => [
-        colorScheme,
+        tenantId,
+        themeMode,
       ];
 }
