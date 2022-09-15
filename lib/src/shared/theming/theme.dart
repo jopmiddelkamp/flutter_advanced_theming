@@ -35,13 +35,6 @@ ThemeData _buildTheme(
   );
 
   return theme.copyWith(
-    appBarTheme: AppBarTheme(
-      foregroundColor: colorScheme.onPrimary,
-      elevation: 4.0,
-      titleSpacing: 4.0,
-      titleTextStyle: CustomTextStyles.pageTitle,
-      systemOverlayStyle: SystemUiOverlayStyle.light,
-    ),
     extensions: [
       colorScheme,
       CustomPillTheme(
